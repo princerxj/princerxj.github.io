@@ -775,7 +775,7 @@ section {
   background: var(--bg-tertiary);
   padding: 2rem;
   border-radius: 12px;
-  border-left: 4px solid var(--primary-color);
+  border: 4px solid var(--primary-color);
 }
 
 .education-item h4 {
@@ -1062,7 +1062,7 @@ section {
 }
 
 .mini-project {
-  background: var(--bg-tertiary);
+  /* background: var(--bg-tertiary); */
   border-radius: 8px;
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
@@ -1077,7 +1077,7 @@ section {
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--gradient-primary);
+  /* background: var(--gradient-primary); */
 }
 
 .mini-project:hover {
