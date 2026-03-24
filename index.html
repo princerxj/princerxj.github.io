@@ -1,795 +1,504 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prince Raj - Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <div class="gradient-bg"></div>
-    <nav class="navbar">
-      <div class="nav-container">
-        <div class="nav-logo">
-          <span class="logo-text">Prince<span class="accent">.</span>Dev</span>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prince Raj — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    
+  </style>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<canvas id="rain-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><div class="robot-eyes-overlay" aria-hidden="true">
+    <div class="eyes">
+      <div class="eye" id="eye-left">
+        <span class="pupil" id="pupil-left"></span>
+      </div>
+      <div class="eye" id="eye-right">
+        <span class="pupil" id="pupil-right"></span>
+      </div>
+    </div>
+  </div></div>
+  <button class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#aiml">AI/ML</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-kana">プリンス・ラジ</div>
+    <h1 class="hero-name">
+      Prince <span class="line-red">Raj</span>
+    </h1>
+    <p class="hero-desc">
+      Curious about how systems work ; and how to build them better.
+      Full-stack developer exploring scalable architectures and AI/ML.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="mailto:Pr273582@gmail.com" class="btn-ghost">Contact Me</a>
+      <a href="Assets/Resume.pdf" target="_blank" class="btn-resume">Resume</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">800+</span>
+        <span class="stat-label">DSA Solved</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">1900</span>
+        <span class="stat-label">LC Rating</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">3+</span>
+        <span class="stat-label">Internships</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="terminal-wrap">
+      <div class="terminal-glow"></div>
+      <div class="anime-terminal">
+        <div class="term-header">
+          <div class="term-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-gold"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="term-title">shinobi@portfolio:~</span>
+          <span class="term-badge">忍</span>
         </div>
-        <ul class="nav-menu">
-          <li class="nav-item">
-            <a href="#home" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="#about" class="nav-link">About</a>
-          </li>
-          <li class="nav-item">
-            <a href="#experience" class="nav-link">Experience</a>
-          </li>
-          <li class="nav-item">
-            <a href="#projects" class="nav-link">Projects</a>
-          </li>
-          <li class="nav-item">
-            <a href="#skills" class="nav-link">Skills</a>
-          </li>
-          <li class="nav-item">
-            <a href="#contact" class="nav-link">Contact</a>
-          </li>
-        </ul>
-        <div class="hamburger">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
+        <div class="term-body" id="termBody">
+          <div class="term-line"><span class="t-dim"># Welcome to Prince Raj's terminal</span></div>
+          <div class="term-line"><span class="t-dim"># Type <span class="t-gold">help</span> to see commands</span></div>
+          <div class="term-line">&nbsp;</div>
+        </div>
+        <div class="term-input-row">
+          <span class="t-prompt">prince<span class="t-dim">@</span>portfolio<span class="t-dim">:~$</span></span>
+          <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false" placeholder="type a command...">
+          <span class="term-cursor-blink">▋</span>
         </div>
       </div>
-    </nav>
+    </div>
+  </div>
+</section>
 
-    <section id="home" class="home">
-      <div class="container">
-        <div class="home-content">
-          <div class="glitch-text">
-            <h1 class="glitch" data-text="Prince Raj">Prince Raj</h1>
-          </div>
-          <h2 class="subtitle">
-            <span class="typed-text"></span>
-            <span class="typing-cursor">&nbsp;</span>
-          </h2>
-          <p class="description">
-            Enthusiastic full-stack developer with hands-on experience in
-            building scalable web applications and backend systems. Currently
-            exploring advanced full-stack development, DevOps, and decentralized
-            technologies like Web3 and Solana. A quick learner who enjoys
-            problem-solving, playing chess, and occasionally scrolling reels to
-            unwind.
-          </p>
-          <div class="cta-buttons">
-            <a href="#projects" class="btn btn-primary">View Projects</a>
-            <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-            <a
-              href="Assets/Resume.pdf"
-              target="_blank"
-              class="btn btn-outline"
-              download="PrinceResume.pdf"
-            >
-              <i class="fas fa-download"></i>
-              See Resume
-            </a>
-          </div>
-          <div class="social-links">
-            <a
-              href="https://linkedin.com/in/princerxj"
-              target="_blank"
-              class="social-link"
-              aria-label="LinkedIn"
-            >
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a
-              href="https://github.com/princerxj"
-              target="_blank"
-              class="social-link"
-              aria-label="GitHub"
-            >
-              <i class="fab fa-github"></i>
-            </a>
-            <a
-              href="mailto:prince4339@nitnagaland.ac.in"
-              class="social-link"
-              aria-label="Email"
-            >
-              <i class="fas fa-envelope"></i>
-            </a>
-          </div>
-        </div>
-        <div class="hero-visual">
-          <div class="profile-container">
-            <div class="profile-image">
-              <img
-                src="Assets/profile-pic.jpg"
-                alt="Prince Raj - Profile Picture"
-              />
-            </div>
-          </div>
-        </div>
+<!-- ABOUT -->
+<div class="section-divider">
+  <span class="divider-label">// Character Profile</span>
+  <div class="divider-line"></div>
+  <span class="divider-num">01</span>
+</div>
+
+<section id="about">
+  <div class="about-text">
+    <p class="about-sub">身元確認 — Identity</p>
+    <h2>Who <span>I Am</span></h2>
+    <p>
+      Third-year ECE undergraduate at NIT Nagaland with a strong focus on full-stack 
+      engineering and systems thinking. I enjoy building end-to-end applications — 
+      from MERN-stack platforms and REST APIs to real-time systems — with an emphasis 
+      on performance, scalability, and clean architecture.
+    </p>
+    <p>
+      I’m driven by curiosity and a strong inclination toward problem solving, which 
+      shapes how I approach development, system design, and emerging areas like AI/ML. 
+      I like understanding how things work under the hood and translating that into 
+      better, more efficient systems.
+    </p>
+    <div class="skill-tags">
+      <div class="tag red">React.js</div>
+      <div class="tag red">Node.js</div>
+      <div class="tag red">Express</div>
+      <div class="tag red">MongoDB</div>
+      <div class="tag">MySQL</div>
+      <div class="tag">Docker</div>
+      <div class="tag">JWT / OAuth</div>
+      <div class="tag">Socket.io</div>
+      <div class="tag">FastAPI</div>
+      <div class="tag">REST APIs</div>
+      <div class="tag">Git / GitHub</div>
+    </div>
+  </div>
+
+  <div class="about-visual">
+    <div class="rank-card" data-icon="忍">
+      <div class="rank-title">🏆 LeetCode Knight</div>
+      <div class="rank-desc">1900 rating · Top ~4% globally · 800+ problems</div>
+    </div>
+    <div class="rank-card" data-icon="戦">
+      <div class="rank-title">⚔️ Codeforces Specialist</div>
+      <div class="rank-desc">1544 rating · consistent competitive programmer</div>
+    </div>
+    <div class="rank-card" data-icon="学">
+      <div class="rank-title">🎓 NIT Nagaland ECE</div>
+      <div class="rank-desc">CGPA 8.65 / 10.0 · Batch of 2027</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<div class="section-divider">
+  <span class="divider-label">// Experience</span>
+  <div class="divider-line"></div>
+  <span class="divider-num">02</span>
+</div>
+
+<section id="experience">
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="exp-period">Aug 2025 – Nov 2025</div>
+      <div class="exp-title">Full Stack Developer Intern</div>
+      <div class="exp-company">ISKCON Manipur · Remote</div>
+      <ul class="exp-bullets">
+        <li>Built and launched ISKCON Imphal's official website with custom admin dashboard</li>
+        <li>Slashed content update time from 30 mins to under 1 minute</li>
+        <li>Achieved Lighthouse scores of 91/100/81 — performance, accessibility, SEO</li>
+        <li>Handled 2,000+ visitors with responsive, modular architecture</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="exp-period">Dec 2024 – Feb 2025</div>
+      <div class="exp-title">Full Stack Developer Intern</div>
+      <div class="exp-company">Besto Solutions, Mumbai · Remote</div>
+      <ul class="exp-bullets">
+        <li>Delivered 5+ client websites, improving development efficiency and code quality</li>
+        <li>Translated client requirements into responsive, functional web applications</li>
+        <li>Maintained 100% on-time project delivery across all engagements</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="exp-period">Nov 2024 – Feb 2025</div>
+      <div class="exp-title">Lead Web Developer</div>
+      <div class="exp-company">Ekarikthin · NIT Nagaland Techno-Cultural Fest</div>
+      <ul class="exp-bullets">
+        <li>Architected the official fest website — zero dependencies, Vanilla JS/HTML5/CSS3</li>
+        <li>Responsive, mobile-first UI that handled traffic from 1,500+ attendees</li>
+        <li>Translated creative requirements into pixel-perfect, interactive UI</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div class="section-divider">
+  <span class="divider-label">// Arsenal</span>
+  <div class="divider-line"></div>
+  <span class="divider-num">03</span>
+</div>
+
+<section id="skills">
+  <div class="skills-container">
+    <div class="skill-category">
+      <h3>Languages</h3>
+      <div class="skill-items">
+        <div class="skill-item" title="Java" data-brand-color="java"><i class="fab fa-java"></i></div>
+        <div class="skill-item" title="JavaScript" data-brand-color="javascript"><i class="fab fa-js"></i></div>
+        <div class="skill-item" title="Python" data-brand-color="python"><i class="fab fa-python"></i></div>
+        <div class="skill-item" title="SQL" data-brand-color="mysql"><i class="fas fa-database"></i></div>
       </div>
-    </section>
+    </div>
 
-    <section id="about" class="about">
-      <div class="container">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content">
-          <div class="about-left">
-            <div class="about-text">
-              <p>
-                I'm a passionate Electronics and Communication Engineering
-                student at NIT Nagaland with a strong focus on web development.
-                Currently maintaining an 8.55 CGPA while actively contributing
-                to real-world projects.
-              </p>
-              <p>
-                My journey in tech has led me to work on diverse projects, from
-                building travel applications to creating websites for cultural
-                events. I believe in writing clean, efficient code and creating
-                user experiences that matter.
-              </p>
-              <div class="stats">
-                <div class="stat">
-                  <span class="stat-number">600+</span>
-                  <span class="stat-label">LeetCode Problems</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-number">7+</span>
-                  <span class="stat-label">Client Projects</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="about-education">
-            <h3>Education</h3>
-            <div class="education-item">
-              <h4>Bachelor of Technology</h4>
-              <p class="institution">
-                National Institute Of Technology, Nagaland
-              </p>
-              <p class="field">Electronics and Communication Engineering</p>
-              <p class="duration">Aug 2023 – 2027 (Expected)</p>
-              <p class="cgpa">CGPA: 8.55</p>
-            </div>
-          </div>
-        </div>
+    <div class="skill-category">
+      <h3>Frameworks & Libraries</h3>
+      <div class="skill-items">
+        <div class="skill-item" title="Node.js" data-brand-color="nodejs"><i class="fab fa-node"></i></div>
+        <div class="skill-item" title="Express.js" data-brand-color="nodejs"><i class="fab fa-npm"></i></div>
+        <div class="skill-item" title="React" data-brand-color="react"><i class="fab fa-react"></i></div>
+        <div class="skill-item" title="Flask" data-brand-color="python"><i class="fas fa-flask"></i></div>
+        <div class="skill-item" title="Pandas" data-brand-color="python"><i class="fas fa-chart-line"></i></div>
+        <div class="skill-item" title="Scikit-Learn" data-brand-color="python"><i class="fas fa-brain"></i></div>
+        <div class="skill-item" title="NumPy" data-brand-color="python"><i class="fas fa-cube"></i></div>
+        <div class="skill-item" title="Tailwind CSS" data-brand-color="tailwind"><i class="fab fa-css3-alt"></i></div>
       </div>
-    </section>
+    </div>
 
-    <section id="experience" class="experience">
-      <div class="container">
-        <h2 class="section-title">Experience</h2>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h3>Full Stack Developer Intern</h3>
-              <h4>ISKCON Manipur</h4>
-              <p class="location">Remote • Aug 2025 – Present</p>
-              <ul>
-                <li>
-                  Built and launched ISKCON Imphal’s official website, boosting
-                  online engagement
-                </li>
-                <li>
-                  Developed frontend and backend with a custom admin dashboard,
-                  reducing content update time from 30 mins to under 1 min
-                </li>
-                <li>
-                  Optimized performance, SEO, and accessibility, achieving
-                  Lighthouse scores of 91/100/81
-                </li>
-                <li>
-                  Delivered responsive, modular design supporting 2,000+
-                  visitors and 3× content growth
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h3>Web Developer</h3>
-              <h4>Coding Club, NIT Nagaland</h4>
-              <p class="location">Nov 2024 – Present</p>
-              <ul>
-                <li>
-                  Designed and developed the official website for Ekarikthin,
-                  College's annual techno-cultural fest
-                </li>
-                <li>
-                  Crafted an engaging web presence for the Innovation and
-                  Incubation Centre at NIT Nagaland
-                </li>
-                <li>
-                  Implemented responsive design ensuring compatibility across
-                  devices
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h3>Web Developer Intern</h3>
-              <h4>Besto Solutions</h4>
-              <p class="location">Remote • Dec 2024 – Feb 2025</p>
-              <ul>
-                <li>
-                  Contributed to successful delivery of 5+ client websites
-                </li>
-                <li>
-                  Collaborated with team to translate client requirements into
-                  functional websites
-                </li>
-                <li>
-                  Maintained focus on deadlines and project specifications
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+    <div class="skill-category">
+      <h3>Databases</h3>
+      <div class="skill-items">
+        <div class="skill-item" title="MySQL" data-brand-color="mysql"><i class="fas fa-database"></i></div>
+        <div class="skill-item" title="MongoDB" data-brand-color="mongodb"><i class="fas fa-leaf"></i></div>
       </div>
-    </section>
+    </div>
 
-    <section id="projects" class="projects">
-      <div class="container">
-        <h2 class="section-title">Projects</h2>
-        <div class="projects-grid">
-          <div class="project-card">
-            <div class="project-image">
-              <img
-                src="Assets/SmartAttendance.png"
-                alt="Smart Attendance App"
-                loading="lazy"
-              />
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a
-                    href="https://smart-attendance-frontend-savt.onrender.com/"
-                    target="_blank"
-                    class="project-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="project-content">
-              <div class="project-header">
-                <h3>Smart Attendance App</h3>
-              </div>
-              <p class="project-description">
-                A full-stack academic platform for attendance, timetables, and
-                curriculum tracking, featuring analytics dashboards, JWT
-                authentication, and ML-based absenteeism prediction, improving
-                efficiency and identifying at-risk students.
-              </p>
-
-              <div class="project-tech">
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">Node.js</span>
-                <span class="tech-tag">Express</span>
-                <span class="tech-tag">MongoDB</span>
-                <span class="tech-tag">Redux</span>
-                <span class="tech-tag">Tailwind CSS</span>
-                <span class="tech-tag">Python</span>
-                <span class="tech-tag">FastAPI</span>
-                <span class="tech-tag">Scikit-learn</span>
-                <span class="tech-tag">Docker</span>
-              </div>
-              <p class="project-date">Sept 2025 – Oct 2025</p>
-            </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-image">
-              <img
-                src="Assets/Iskcon.png"
-                alt="Iskcon Temple Website"
-                loading="lazy"
-              />
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a
-                    href="https://www.iskconmanipur.com/"
-                    target="_blank"
-                    class="project-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-header">
-                <h3>Iskcon Manipur</h3>
-              </div>
-              <p class="project-description">
-                A full-stack website for ISKCON Manipur to share events,
-                festivals, educational resources, and media with devotees,
-                featuring an admin dashboard for easy management. Built with
-                Node.js, Express, MongoDB, EJS, and Cloudinary.
-              </p>
-
-              <div class="project-tech">
-                <span class="tech-tag">EJS</span>
-                <span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">CSS</span>
-                <span class="tech-tag">Node.js</span>
-                <span class="tech-tag">Express</span>
-                <span class="tech-tag">MongoDB</span>
-              </div>
-              <p class="project-date">July 2025 – Aug 2025</p>
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-image">
-              <img
-                src="Assets/wanderlust.png"
-                alt="WanderLust Travel Application"
-                loading="lazy"
-              />
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a
-                    href="https://wanderlust-9757.onrender.com/"
-                    target="_blank"
-                    class="project-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                  <a
-                    href="https://github.com/princerxj/WanderLust"
-                    target="_blank"
-                    class="project-link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-header">
-                <h3>WanderLust</h3>
-              </div>
-              <p class="project-description">
-                A full-stack travel web application built with Node.js, Express,
-                and MongoDB Atlas. Features user authentication, CRUD
-                operations, and secure image uploads.
-              </p>
-              <div class="project-tech">
-                <span class="tech-tag">Node.js</span>
-                <span class="tech-tag">Express</span>
-                <span class="tech-tag">MongoDB</span>
-                <span class="tech-tag">Cloudinary</span>
-              </div>
-              <p class="project-date">June 2025 – July 2025</p>
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-image">
-              <img
-                src="Assets/ekarikthin.jpg"
-                alt="Ekarikthin Cultural Festival Website"
-                loading="lazy"
-              />
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a
-                    href="https://www.nitnagaland.ac.in/ekavi25/"
-                    target="_blank"
-                    class="project-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                  <a
-                    href="https://github.com/princerxj/Ekarikthin-Final"
-                    target="_blank"
-                    class="project-link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-header">
-                <h3>Ekarikthin</h3>
-              </div>
-              <p class="project-description">
-                Official website for NIT Nagaland's annual techno-cultural fest.
-                Features responsive design, interactive navigation, and dynamic
-                galleries.
-              </p>
-              <div class="project-tech">
-                <span class="tech-tag">HTML</span>
-                <span class="tech-tag">CSS</span>
-                <span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">Bootstrap</span>
-              </div>
-              <p class="project-date">Dec 2024 – Feb 2025</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="trial-builds">
-          <h3 class="subsection-title">Trial & Error Builds</h3>
-          <div class="mini-projects-grid">
-            <div class="mini-project">
-              <div class="mini-project-content">
-                <h4>Image-Puzzle Game</h4>
-                <div class="mini-project-links">
-                  <a
-                    href="https://princerxj.github.io/Image-Puzzle_game/"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                  <a
-                    href="https://github.com/princerxj/Image-Puzzle_game"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="mini-project">
-              <div class="mini-project-content">
-                <h4>Tic Tac Toe Game</h4>
-                <div class="mini-project-links">
-                  <a
-                    href="https://princerxj.github.io/Tic-Tac-Toe/"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                  <a
-                    href="https://github.com/princerxj/Tic-Tac-Toe"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="mini-project">
-              <div class="mini-project-content">
-                <h4>Weather App</h4>
-                <div class="mini-project-links">
-                  <a
-                    href="https://princerxj.github.io/Weather-app/"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                  <a
-                    href="https://github.com/princerxj/Weather-app"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="mini-project">
-              <div class="mini-project-content">
-                <h4>CGPA Calculator</h4>
-                <div class="mini-project-links">
-                  <a
-                    href="https://cgpa-ece.netlify.app/"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                  <a
-                    href="https://github.com/princerxj"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="mini-project">
-              <div class="mini-project-content">
-                <h4>Spotify Clone</h4>
-                <div class="mini-project-links">
-                  <a
-                    href="https://princerxj.github.io/Spotify-Replica/"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                  <a
-                    href="https://github.com/princerxj/Spotify-Replica"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="mini-project">
-              <div class="mini-project-content">
-                <h4>Quiz App</h4>
-                <div class="mini-project-links">
-                  <a
-                    href="https://quiz-game-alpha-amber.vercel.app/"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                  <a
-                    href="https://github.com/princerxj/Quiz-App"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="mini-project">
-              <div class="mini-project-content">
-                <h4>Valentine Fun Project</h4>
-                <div class="mini-project-links">
-                  <a
-                    href="https://valentine-js.netlify.app/"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                  <a
-                    href="https://github.com/princerxj/Valentine-fun-proj"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="mini-project">
-              <div class="mini-project-content">
-                <h4>Simon Says Game</h4>
-                <div class="mini-project-links">
-                  <a
-                    href="https://princerxj.github.io/Simon-Says_Game/"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                  <a
-                    href="https://github.com/princerxj/Simon-Says_Game"
-                    target="_blank"
-                    class="mini-link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="skill-category">
+      <h3>Developer Tools</h3>
+      <div class="skill-items">
+        <div class="skill-item" title="Git" data-brand-color="git"><i class="fab fa-git-alt"></i></div>
+        <div class="skill-item" title="GitHub" data-brand-color="github"><i class="fab fa-github"></i></div>
+        <div class="skill-item" title="Docker" data-brand-color="docker"><i class="fab fa-docker"></i></div>
+        <div class="skill-item" title="Postman" data-brand-color="github"><i class="fas fa-envelope"></i></div>
       </div>
-    </section>
+    </div>
 
-    <section id="skills" class="skills">
-      <div class="container">
-        <h2 class="section-title">Technical Skills</h2>
-        <div class="skills-categories">
-          <div class="skill-category">
-            <h3>Languages</h3>
-            <div class="skill-icons">
-              <div class="skill-box" data-skill="Java">
-                <i class="fab fa-java"></i>
-                <span>Java</span>
-              </div>
-              <div class="skill-box" data-skill="Python">
-                <i class="fab fa-python"></i>
-                <span>Python</span>
-              </div>
-              <div class="skill-box" data-skill="HTML">
-                <i class="fab fa-html5"></i>
-                <span>HTML</span>
-              </div>
-              <div class="skill-box" data-skill="CSS">
-                <i class="fab fa-css3-alt"></i>
-                <span>CSS</span>
-              </div>
-              <div class="skill-box" data-skill="JavaScript">
-                <i class="fab fa-js-square"></i>
-                <span>JavaScript</span>
-              </div>
-              <div class="skill-box" data-skill="TypeScript">
-                <i class="fab fa-js-square"></i>
-                <span>TypeScript</span>
-              </div>
-            </div>
-          </div>
-          <div class="skill-category">
-            <h3>Frameworks & Libraries</h3>
-            <div class="skill-icons">
-              <div class="skill-box" data-skill="Node.js">
-                <i class="fab fa-node-js"></i>
-                <span>Node.js</span>
-              </div>
-              <div class="skill-box" data-skill="React">
-                <i class="fab fa-react"></i>
-                <span>React</span>
-              </div>
-              <div class="skill-box" data-skill="Express">
-                <i class="fas fa-server"></i>
-                <span>Express</span>
-              </div>
-              <div class="skill-box" data-skill="Bootstrap">
-                <i class="fab fa-bootstrap"></i>
-                <span>Bootstrap</span>
-              </div>
-              <div class="skill-box" data-skill="Tailwind">
-                <i class="fas fa-wind"></i>
-                <span>Tailwind</span>
-              </div>
-            </div>
-          </div>
-          <div class="skill-category">
-            <h3>Tools & Databases</h3>
-            <div class="skill-icons">
-              <div class="skill-box" data-skill="Git">
-                <i class="fab fa-git-alt"></i>
-                <span>Git</span>
-              </div>
-              <div class="skill-box" data-skill="GitHub">
-                <i class="fab fa-github"></i>
-                <span>GitHub</span>
-              </div>
-              <div class="skill-box" data-skill="MongoDB">
-                <i class="fas fa-database"></i>
-                <span>MongoDB</span>
-              </div>
-              <div class="skill-box" data-skill="SQL">
-                <i class="fas fa-database"></i>
-                <span>SQL</span>
-              </div>
-              <div class="skill-box" data-skill="Socket.io">
-                <i class="fas fa-plug"></i>
-                <span>Socket.io</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="coding-profile">
-          <h3>Coding Profile</h3>
-          <a
-            href="https://leetcode.com/u/princerxj/"
-            target="_blank"
-            class="leetcode-link"
-          >
-            <i class="fas fa-code"></i>
-            <span>LeetCode</span>
-          </a>
-        </div>
+    <div class="skill-category">
+      <h3>Concepts</h3>
+      <div class="skill-items">
+        <div class="skill-item" title="OOP" data-brand-color="javascript"><i class="fas fa-cube"></i></div>
+        <div class="skill-item" title="REST APIs" data-brand-color="nodejs"><i class="fas fa-plug"></i></div>
+        <div class="skill-item" title="MVC" data-brand-color="javascript"><i class="fas fa-layer-group"></i></div>
+        <div class="skill-item" title="Agile" data-brand-color="github"><i class="fas fa-tasks"></i></div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section id="contact" class="contact">
-      <div class="container">
-        <h2 class="section-title">Get In Touch</h2>
-        <div class="contact-content">
-          <div class="contact-info">
-            <div class="contact-item">
-              <i class="fas fa-phone"></i>
-              <div>
-                <h4>Phone</h4>
-                <p>+91-9508784041</p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <i class="fas fa-envelope"></i>
-              <div>
-                <h4>Email</h4>
-                <p>prince4339@nitnagaland.ac.in</p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <i class="fab fa-linkedin"></i>
-              <div>
-                <h4>LinkedIn</h4>
-                <a href="https://linkedin.com/in/princerxj" target="_blank"
-                  >linkedin.com/in/princerxj</a
-                >
-              </div>
-            </div>
-            <div class="contact-item">
-              <i class="fab fa-github"></i>
-              <div>
-                <h4>GitHub</h4>
-                <a href="https://github.com/princerxj" target="_blank"
-                  >github.com/princerxj</a
-                >
-              </div>
-            </div>
-          </div>
-          <div class="contact-form">
-            <form id="contactForm">
-              <div class="form-group">
-                <label for="name">Your name:</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Your Name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="email">Your email:</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Your Email"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="message">Your message:</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  placeholder="Your Message"
-                  rows="5"
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Send</button>
-            </form>
-          </div>
-        </div>
+<!-- PROJECTS -->
+<div class="section-divider">
+  <span class="divider-label">// Project Arsenal</span>
+  <div class="divider-line"></div>
+  <span class="divider-num">04</span>
+</div>
+
+<section id="projects">
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <span class="project-num">01</span>
+      <div class="card-arc"></div>
+      <div class="project-title">Smart Attendance App</div>
+      <div class="project-desc">
+        End-to-end academic platform for attendance, timetables, and curriculum tracking. 
+        ML-based absenteeism prediction with 99% uptime.
       </div>
-    </section>
-
-    <footer class="footer">
-      <div class="container">
-        <p>&copy; 2025 Prince Raj. All rights reserved.</p>
+      <div class="project-tech">
+        <span>React</span><span>Node.js</span><span>MongoDB</span>
+        <span>Python</span><span>FastAPI</span><span>Docker</span>
       </div>
-    </footer>
+      <a href="https://github.com/Harsh-code907/smart-attendance-app" class="project-link">View Project →</a>
+    </div>
 
-    <script src="script.js"></script>
-  </body>
+    <div class="project-card">
+      <span class="project-num">02</span>
+      <div class="card-arc"></div>
+      <div class="project-title">Code Critic</div>
+      <div class="project-desc">
+        AI-powered code review system. Credit-based workflow with Google/GitHub OAuth. 
+        Improved bug detection by 40%, cut bounce rate by 35%.
+      </div>
+      <div class="project-tech">
+        <span>React</span><span>Express</span><span>MongoDB</span>
+        <span>Gemini</span><span>OAuth</span>
+      </div>
+      <a href="https://github.com/princerxj/CodeCritic" target="_blank" class="project-link">View Project →</a>
+    </div>
+
+    <div class="project-card">
+      <span class="project-num">03</span>
+      <div class="card-arc"></div>
+      <div class="project-title">Checkmate Blitz</div>
+      <div class="project-desc">
+        Real-time multiplayer chess game built on the MERN stack with live game state, 
+        move validation, and Socket.io for instant sync.
+      </div>
+      <div class="project-tech">
+        <span>React</span><span>Node.js</span><span>MongoDB</span><span>Socket.io</span>
+      </div>
+      <a href="https://github.com/princerxj/Checkmate-Blitz" target="_blank" class="project-link">View Project →</a>
+    </div>
+
+    <div class="project-card">
+      <span class="project-num">04</span>
+      <div class="card-arc"></div>
+      <div class="project-title">Career Copilot</div>
+      <div class="project-desc">
+        AI-assisted career guidance platform. Helps users navigate tech career decisions 
+        with smart recommendations and roadmap generation.
+      </div>
+      <div class="project-tech">
+        <span>React</span><span>Express</span><span>MongoDB</span>
+        <span>Gemini</span>
+      </div>
+      <a href="https://github.com/princerxj/Career-Copilot" target="_blank" class="project-link">View Project →</a>
+    </div>
+
+    <div class="project-card">
+      <span class="project-num">05</span>
+      <div class="card-arc"></div>
+      <div class="project-title">Ekarikthin Fest Site</div>
+      <div class="project-desc">
+        Official website for NIT Nagaland's Techno-Cultural Fest. Zero dependencies, 
+        pure HTML/CSS/JS, handling 1,500+ concurrent attendees.
+      </div>
+      <div class="project-tech">
+        <span>HTML5</span><span>CSS3</span><span>Vanilla JS</span>
+      </div>
+      <a href="https://www.nitnagaland.ac.in/ekavi25/" target="_blank" class="project-link">Live Site →</a>
+    </div>
+
+    <div class="project-card">
+      <span class="project-num">06</span>
+      <div class="card-arc"></div>
+      <div class="project-title">Shinobi Clash</div>
+      <div class="project-desc">
+        Anime-themed game project. 
+        A side-scrolling combat experience inspired by Naruto, built in JavaScript.
+      </div>
+      <div class="project-tech">
+        <span>React</span><span>Express</span><span>MongoDB</span>
+        <span>Socket Io</span>
+      </div>
+      <a href="https://github.com/princerxj/Shinobi_Clash" target="_blank" class="project-link">View Project →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<div class="section-divider">
+  <span class="divider-label">// Achievements</span>
+  <div class="divider-line"></div>
+  <span class="divider-num">05</span>
+</div>
+
+<section id="achievements">
+  <div class="achievements-grid">
+    <div class="ach-item">
+      <span class="ach-icon">⚔️</span>
+      <div class="ach-title">LeetCode Knight</div>
+      <div class="ach-sub">1900 rating · Top ~4% globally · consistent problem solver</div>
+    </div>
+    <div class="ach-item">
+      <span class="ach-icon">🎯</span>
+      <div class="ach-title">Codeforces Specialist</div>
+      <div class="ach-sub">1544 rating · competitive algorithmic programming</div>
+    </div>
+    <div class="ach-item">
+      <span class="ach-icon">🧮</span>
+      <div class="ach-title">900+ Problems</div>
+      <div class="ach-sub">Solved across LeetCode and Codeforces combined</div>
+    </div>
+    <div class="ach-item">
+      <span class="ach-icon">🏆</span>
+      <div class="ach-title">SIH 2025 — 1st Place</div>
+      <div class="ach-sub">NIT Nagaland Internal Hackathon · scalable MERN solution</div>
+    </div>
+  </div>
+</section>
+
+<!-- AIML -->
+<div class="section-divider">
+  <span class="divider-label">// Exploring AIML</span>
+  <div class="divider-line"></div>
+  <span class="divider-num">06</span>
+</div>
+
+<section id="aiml" style="padding: 4rem 4rem 6rem; position: relative; overflow: hidden;">
+
+  <div style="max-width: 680px; margin-bottom: 3.5rem;">
+    <p style="font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem;">人工知能 — AI/ML Journey</p>
+    <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1; margin-bottom: 1.2rem;">Leveling Up<br><span style="color: var(--red);">Into AI/ML</span></h2>
+    <p style="font-size: 0.9rem; line-height: 1.85; color: rgba(240,236,227,0.65); border-left: 2px solid var(--gold); padding-left: 1.2rem;">
+      Not chasing a trend — staying lethal. With a strong foundation in DSA, MERN, and systems engineering, 
+      I started learning AI/ML to stay ahead of the curve and leverage it in real products. 
+      The curiosity is genuine, the grind is systematic.
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 3rem;">
+
+    <div class="aiml-card" style="background: var(--panel); padding: 2rem 1.5rem; transition: background 0.2s;">
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.5rem;">Phase 01</div>
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; margin-bottom: 0.6rem;">Python Basics</div>
+      <div style="font-size: 0.78rem; color: rgba(240,236,227,0.55); line-height: 1.6;">Core language fundamentals, OOP, file I/O — the foundation.</div>
+    </div>
+
+    <div class="aiml-card" style="background: var(--panel); padding: 2rem 1.5rem; transition: background 0.2s;">
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.5rem;">Phase 02</div>
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; margin-bottom: 0.6rem;">Data Analysis</div>
+      <div style="font-size: 0.78rem; color: rgba(240,236,227,0.55); line-height: 1.6;">Pandas, NumPy, Matplotlib, Seaborn — wrangling and visualizing data.</div>
+    </div>
+
+    <div class="aiml-card" style="background: var(--panel); padding: 2rem 1.5rem; transition: background 0.2s;">
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.5rem;">Phase 03</div>
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; margin-bottom: 0.6rem;">EDA & Feature Eng.</div>
+      <div style="font-size: 0.78rem; color: rgba(240,236,227,0.55); line-height: 1.6;">Exploratory analysis, feature engineering, Google Play Store EDA project.</div>
+    </div>
+
+    <div class="aiml-card" style="background: var(--panel); padding: 2rem 1.5rem; transition: background 0.2s;">
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.5rem;">Phase 04</div>
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; margin-bottom: 0.6rem;">Machine Learning</div>
+      <div style="font-size: 0.78rem; color: rgba(240,236,227,0.55); line-height: 1.6;">Scikit-learn, MLflow, supervised & unsupervised — actively building projects.</div>
+    </div>
+
+    <div class="aiml-card" style="background: var(--panel); padding: 2rem 1.5rem; transition: background 0.2s; border: 1px solid rgba(232,39,58,0.2);">
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--red); letter-spacing: 0.1em; margin-bottom: 0.5rem;">Next →</div>
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; margin-bottom: 0.6rem;">Deep Learning</div>
+      <div style="font-size: 0.78rem; color: rgba(240,236,227,0.55); line-height: 1.6;">ANN, RNN, LSTM, GRU, Transformers, Attention — the arc continues.</div>
+    </div>
+
+    <div class="aiml-card" style="background: var(--panel); padding: 2rem 1.5rem; transition: background 0.2s; border: 1px solid rgba(201,168,76,0.1);">
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.5rem;">Tooling</div>
+      <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; margin-bottom: 0.6rem;">Flask · FastAPI · Streamlit</div>
+      <div style="font-size: 0.78rem; color: rgba(240,236,227,0.55); line-height: 1.6;">Deploying models as real APIs and apps — bridging ML with full-stack.</div>
+    </div>
+
+  </div>
+
+  <!-- Repos -->
+  <div>
+    <p style="font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; margin-bottom: 1.2rem;">// Active Learning Repos</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem;">
+      <a href="https://github.com/princerxj/Machine_Learning" target="_blank" style="font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.25); padding: 0.5rem 1rem; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'">Machine_Learning ↗</a>
+      <a href="https://github.com/princerxj/Exploratory_Data_Analysis" target="_blank" style="font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.25); padding: 0.5rem 1rem; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'">Exploratory_Data_Analysis ↗</a>
+      <a href="https://github.com/princerxj/Feature_Engineering" target="_blank" style="font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.25); padding: 0.5rem 1rem; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'">Feature_Engineering ↗</a>
+      <a href="https://github.com/princerxj/Data_Analysis" target="_blank" style="font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.25); padding: 0.5rem 1rem; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'">Data_Analysis ↗</a>
+      <a href="https://github.com/princerxj/Google_Play_Store_EDA" target="_blank" style="font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.25); padding: 0.5rem 1rem; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'">Google_Play_Store_EDA ↗</a>
+      <a href="https://github.com/princerxj/ML_project" target="_blank" style="font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.25); padding: 0.5rem 1rem; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'">ML_project ↗</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+<div class="section-divider">
+  <span class="divider-label">// Final Arc</span>
+  <div class="divider-line"></div>
+  <span class="divider-num">07</span>
+</div>
+
+<section id="contact">
+  <p class="contact-label">連絡先 — Let's connect</p>
+  <h2 class="contact-heading">Let's Build<br><span>Something.</span></h2>
+  <div class="contact-links">
+    <a href="mailto:Pr273582@gmail.com" class="contact-link primary">✉ Email Me</a>
+    <a href="https://github.com/princerxj" target="_blank" class="contact-link">GitHub</a>
+    <a href="https://www.linkedin.com/in/princerxj" target="_blank" class="contact-link">LinkedIn</a>
+    <a href="https://leetcode.com/u/tlefreak/" target="_blank" class="contact-link">LeetCode</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">Prince Raj</div>
+  <div class="f-copy">© 2026 · Coded with 愛</div>
+</footer>
+
+<script src="./script.js"></script>
+</body>
 </html>

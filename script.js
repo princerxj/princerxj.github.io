@@ -1,549 +1,276 @@
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.transform = `translate(${e.clientX - 2}px, ${e.clientY - 2}px)`;
 });
 
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    });
-});
+// Rain animation
+const canvas = document.getElementById('rain-canvas');
+const ctx = canvas.getContext('2d');
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-link');
-
-function updateActiveLink() {
-    let current = '';
-    const scrollY = window.pageYOffset;
-
-    sections.forEach(section => {
-        const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
-        const sectionId = section.getAttribute('id');
-
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            current = sectionId;
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
-window.addEventListener('scroll', updateActiveLink);
+const drops = Array.from({ length: 80 }, () => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight,
+  len: Math.random() * 18 + 8,
+  speed: Math.random() * 3 + 2,
+  opacity: Math.random() * 0.5 + 0.1,
+  width: Math.random() < 0.3 ? 1.5 : 0.8
+}));
 
-const floatingElements = document.querySelectorAll('.float-element');
-
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const rate = scrolled * -0.5;
-
-    floatingElements.forEach((element, index) => {
-        const speed = (index + 1) * 0.3;
-        element.style.transform = `translateY(${rate * speed}px) rotate(${scrolled * 0.1}deg)`;
-    });
-});
-
-const navbar = document.querySelector('.navbar');
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(10, 10, 10, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
-    } else {
-        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
-        navbar.style.boxShadow = 'none';
+function drawRain() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drops.forEach(d => {
+    ctx.beginPath();
+    ctx.strokeStyle = `rgba(201, 168, 76, ${d.opacity})`;
+    ctx.lineWidth = d.width;
+    ctx.moveTo(d.x, d.y);
+    ctx.lineTo(d.x - 1, d.y + d.len);
+    ctx.stroke();
+    d.y += d.speed;
+    if (d.y > canvas.height + 20) {
+      d.y = -20;
+      d.x = Math.random() * canvas.width;
     }
-});
+  });
+  requestAnimationFrame(drawRain);
+}
+drawRain();
 
-const skillBoxes = document.querySelectorAll('.skill-box');
+// ── Terminal ──
+const termBody  = document.getElementById('termBody');
+const termInput = document.getElementById('termInput');
 
-skillBoxes.forEach(box => {
-    box.addEventListener('mouseenter', () => {
-        const skill = box.getAttribute('data-skill');
-        box.style.transform = 'translateY(-10px) scale(1.05)';
-        
-        box.style.boxShadow = '0 15px 35px rgba(0, 245, 255, 0.3)';
-    });
-
-    box.addEventListener('mouseleave', () => {
-        box.style.transform = 'translateY(0) scale(1)';
-        box.style.boxShadow = 'none';
-    });
-});
-
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+const COMMANDS = {
+  help: [
+    '<span class="t-gold">Available commands:</span>',
+    '  <span class="t-cyan">about</span>       — who I am',
+    '  <span class="t-cyan">skills</span>      — tech stack',
+    '  <span class="t-cyan">projects</span>    — what I\'ve built',
+    '  <span class="t-cyan">experience</span>  — work history',
+    '  <span class="t-cyan">achievements</span>— milestones',
+    '  <span class="t-cyan">contact</span>     — reach me',
+    '  <span class="t-cyan">github</span>      — open my github',
+    '  <span class="t-cyan">clear</span>       — clear terminal',
+  ],
+  about: [
+    '<span class="t-gold">Prince Raj</span> — Full Stack Developer',
+    'ECE undergrad @ NIT Nagaland (2023–2027)',
+    'I build scalable systems and conquer algorithmic arenas.',
+    'Competitive programmer by habit, engineer by craft.',
+  ],
+  skills: [
+    '<span class="t-gold">Frontend:</span>  React.js, HTML5, CSS3, Tailwind',
+    '<span class="t-gold">Backend:</span>   Node.js, Express, FastAPI, Flask',
+    '<span class="t-gold">Database:</span>  MongoDB, MySQL, SQLite',
+    '<span class="t-gold">DevOps:</span>    Docker, Git, JWT, OAuth',
+    '<span class="t-gold">AI/ML:</span>     Scikit-learn, Pandas, NumPy',
+  ],
+  projects: [
+    '<span class="t-gold">1.</span> Smart Attendance App   — MERN + ML prediction',
+    '<span class="t-gold">2.</span> Code Critic            — AI code review (Gemini)',
+    '<span class="t-gold">3.</span> Checkmate Blitz        — Real-time chess (MERN)',
+    '<span class="t-gold">4.</span> Career Copilot         — AI career guidance',
+    '<span class="t-gold">5.</span> Shinobi Clash          — Anime game (Canvas)',
+    '<span class="t-dim">→ Scroll to #projects for full details</span>',
+  ],
+  experience: [
+    '<span class="t-gold">ISKCON Manipur</span>      Aug–Nov 2025 · Full Stack Intern',
+    '<span class="t-gold">Besto Solutions</span>     Dec 2024–Feb 2025 · Full Stack Intern',
+    '<span class="t-gold">Ekarikthin</span>          Nov 2024–Feb 2025 · Lead Web Dev',
+  ],
+  achievements: [
+    '⚔️  <span class="t-gold">LeetCode Knight</span> — 1900 rating, top ~4% globally',
+    '🎯  <span class="t-gold">Codeforces Specialist</span> — 1544 rating',
+    '🧮  <span class="t-gold">800+ problems</span> solved across platforms',
+    '🏆  <span class="t-gold">SIH 2025 — 1st Place</span> NIT Nagaland Hackathon',
+  ],
+  contact: [
+    '📧  <span class="t-gold">Email:</span>    Pr273582@gmail.com',
+    '🐙  <span class="t-gold">GitHub:</span>   github.com/princerxj',
+    '💼  <span class="t-gold">LinkedIn:</span> linkedin.com/in/princerxj',
+  ],
+  github: ['<span class="t-green">Opening github.com/princerxj ...</span>'],
+  whoami: ['<span class="t-gold">prince</span> — shinobi developer, NIT Nagaland'],
+  ls:     ['about  skills  projects  experience  achievements  contact'],
+  pwd:    ['<span class="t-gold">/home/prince/portfolio</span>'],
+  date:   ['<span class="t-gold">' + new Date().toDateString() + '</span>'],
 };
 
+function addLine(html, cls = '') {
+  const div = document.createElement('div');
+  div.className = 'term-line' + (cls ? ' ' + cls : '');
+  div.innerHTML = html;
+  termBody.appendChild(div);
+  termBody.scrollTop = termBody.scrollHeight;
+}
+
+function runCommand(raw) {
+  const cmd = raw.trim().toLowerCase();
+  addLine('<span class="t-gold">prince@portfolio:~$</span> ' + raw);
+  if (!cmd) return;
+
+  if (cmd === 'clear') {
+    termBody.innerHTML = '';
+    return;
+  }
+  if (cmd === 'github') {
+    window.open('https://github.com/princerxj', '_blank');
+  }
+  const lines = COMMANDS[cmd];
+  if (lines) {
+    lines.forEach(l => addLine(l));
+  } else {
+    addLine('<span class="t-red">command not found: ' + cmd + '</span> — try <span class="t-gold">help</span>');
+  }
+  addLine('&nbsp;');
+}
+
+// Typewriter boot sequence
+const bootLines = [
+  { text: '$ initializing shinobi.os ...', cls: 't-dim', delay: 0 },
+  { text: '$ loading jutsu modules ......', cls: 't-dim', delay: 400 },
+  { text: '✓ <span class="t-green">system ready</span>', delay: 900 },
+  { text: '&nbsp;', delay: 1100 },
+  { text: 'Type <span class="t-gold">help</span> to begin.', delay: 1200 },
+  { text: '&nbsp;', delay: 1300 },
+];
+
+termBody.innerHTML = '';
+bootLines.forEach(({ text, cls, delay }) => {
+  setTimeout(() => addLine(text, cls || ''), delay);
+});
+
+termInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const val = termInput.value;
+    termInput.value = '';
+    runCommand(val);
+  }
+});
+
+// Click anywhere on terminal to focus input
+document.querySelector('.anime-terminal').addEventListener('click', () => termInput.focus());
+
+// Scroll reveal
 const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, 100 * (entry.target.dataset.delay || 0));
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
 
-const animateElements = document.querySelectorAll('.timeline-item, .project-card, .skill-category, .contact-item, .mini-project');
-animateElements.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'all 0.6s ease';
-    observer.observe(el);
+document.querySelectorAll('.timeline-item, .project-card, .ach-item').forEach((el, i) => {
+  el.dataset.delay = i % 3;
+  observer.observe(el);
 });
 
-const stats = document.querySelectorAll('.stat-number');
+// Smooth nav active states
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
 
-function animateStats() {
-    stats.forEach(stat => {
-        const originalText = stat.textContent;
-        const target = parseFloat(originalText.replace(/[^0-9.]/g, ''));
-        const increment = target / 100;
-        let current = 0;
-
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            
-            if (originalText.includes('+')) {
-                stat.textContent = Math.floor(current) + '+';
-            } else if (originalText.includes('.')) {
-                stat.textContent = current.toFixed(2);
-            } else {
-                stat.textContent = Math.floor(current);
-            }
-        }, 20);
-    });
-}
-
-const aboutSection = document.querySelector('#about');
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateStats();
-            statsObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-statsObserver.observe(aboutSection);
-
-const contactForm = document.querySelector('#contactForm');
-
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-
-    if (!name || !email || !message) {
-        showNotification('Please fill in all fields.', 'error');
-        return;
-    }
-
-    const mailtoLink = `mailto:pr273582@gmail.com?subject=Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(
-        `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-    )}`;
-
-    window.location.href = mailtoLink;
-    
-    showNotification('Opening your email client...', 'success');
-    contactForm.reset();
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current
+      ? 'var(--paper)' : '';
+  });
 });
 
-function showNotification(message, type) {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.textContent = message;
-    
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 1rem 2rem;
-        border-radius: 8px;
-        color: white;
-        font-weight: 500;
-        z-index: 10000;
-        transform: translateX(400px);
-        transition: transform 0.3s ease;
-        ${type === 'success' ? 'background: #10b981;' : 'background: #ef4444;'}
-    `;
+// Hamburger menu toggle
+const hamburger = document.getElementById('hamburger');
+const navLinksMenu = document.getElementById('navLinks');
 
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-
-    setTimeout(() => {
-        notification.style.transform = 'translateX(400px)';
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 5000);
-}
-
-let mouseX = 0;
-let mouseY = 0;
-let trail = [];
-
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  navLinksMenu.classList.toggle('active');
 });
 
-function createTrail() {
-    trail.push({ x: mouseX, y: mouseY, life: 30 });
-    
-    if (trail.length > 10) {
-        trail.shift();
-    }
-}
-
-const projectCards = document.querySelectorAll('.project-card');
-
-projectCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 15;
-        const rotateY = (centerX - x) / 15;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-    });
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinksMenu.classList.remove('active');
+  });
 });
 
-const projectImages = document.querySelectorAll('.project-image img');
+/*
+      Robot eyes script
+      - pupils follow the cursor position
+      - pointer-events for overlay set to none so it doesn't prevent clicks
+      - smooth movement using requestAnimationFrame and linear interpolation
+    */
 
-projectCards.forEach((card, index) => {
-    const img = card.querySelector('.project-image img');
-    
-    card.addEventListener('mousemove', (e) => {
-        if (!img) return;
-        
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const moveX = (x - centerX) / 10;
-        const moveY = (y - centerY) / 10;
-        
-        img.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        if (!img) return;
-        img.style.transform = 'scale(1)';
-    });
-});
+    (function(){
+      const eyes = [
+        { eye: document.getElementById('eye-left'), pupil: document.getElementById('pupil-left') },
+        { eye: document.getElementById('eye-right'), pupil: document.getElementById('pupil-right') }
+      ];
 
-const profileImages = document.querySelectorAll('.profile-image, .about-profile-image');
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
 
+      const smooth = 0.18;
 
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes ripple {
-        0% {
-            width: 0;
-            height: 0;
-            opacity: 1;
-        }
-        100% {
-            width: 200px;
-            height: 200px;
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
+      const state = eyes.map(()=>({x:0,y:0}));
 
-let colorIndex = 0;
-const colors = [
-    { primary: '#00f5ff', secondary: '#0066ff' },
-    { primary: '#ff0080', secondary: '#8000ff' },
-    { primary: '#00ff80', secondary: '#0080ff' }
-];
+      function getCenterRect(rect){
+        return { cx: rect.left + rect.width / 2, cy: rect.top + rect.height / 2 };
+      }
+      function handleMove(e){
+        mouseX = e.clientX ?? (e.touches && e.touches[0].clientX) ?? mouseX;
+        mouseY = e.clientY ?? (e.touches && e.touches[0].clientY) ?? mouseY;
+      }
 
-function cycleColors() {
-    const root = document.documentElement;
-    const currentColors = colors[colorIndex];
-    
-    colorIndex = (colorIndex + 1) % colors.length;
-}
+      window.addEventListener('mousemove', handleMove, {passive:true});
+      window.addEventListener('touchmove', handleMove, {passive:true});
+      window.addEventListener('mouseleave', ()=>{
+        mouseX = window.innerWidth / 2;
+        mouseY = window.innerHeight / 2;
+      });
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('loaded');
-    
-    const criticalElements = document.querySelectorAll('.glitch, .nav-logo');
-    criticalElements.forEach(el => {
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-    });
-    
-    // Initialize typing effect
-    initTypingEffect();
-    
-    // Initialize code scrolling background
-    initCodeBackground();
-});
+      function animate(){
+        eyes.forEach((item, idx) => {
+          const eyeRect = item.eye.getBoundingClientRect();
+          const center = getCenterRect(eyeRect);
+          let dx = mouseX - center.cx;
+          let dy = mouseY - center.cy;
+          const dist = Math.hypot(dx, dy) || 1;
 
-// Code Scrolling Background
-function initCodeBackground() {
-    const codeLines = document.querySelector('.code-lines');
-    if (!codeLines) return;
-    
-    const codeSnippets = [
-        'const express = require("express");',
-        'app.get("/api/users", async (req, res) => {',
-        '  try {',
-        '    const users = await User.find();',
-        '    res.json(users);',
-        '  } catch (error) {',
-        '    res.status(500).json({ error: error.message });',
-        '  }',
-        '});',
-        '',
-        'function fibonacci(n) {',
-        '  if (n <= 1) return n;',
-        '  return fibonacci(n - 1) + fibonacci(n - 2);',
-        '}',
-        '',
-        'class Node {',
-        '  constructor(data) {',
-        '    this.data = data;',
-        '    this.next = null;',
-        '  }',
-        '}',
-        '',
-        '// Binary Search Implementation',
-        'function binarySearch(arr, target) {',
-        '  let left = 0, right = arr.length - 1;',
-        '  while (left <= right) {',
-        '    const mid = Math.floor((left + right) / 2);',
-        '    if (arr[mid] === target) return mid;',
-        '    if (arr[mid] < target) left = mid + 1;',
-        '    else right = mid - 1;',
-        '  }',
-        '  return -1;',
-        '}',
-        '',
-        'const mongoose = require("mongoose");',
-        'mongoose.connect("mongodb://localhost:27017/db");',
-        '',
-        'app.use(express.json());',
-        'app.use(cors());',
-        'app.use("/api", routes);',
-        '',
-        'const jwt = require("jsonwebtoken");',
-        'const token = jwt.sign(payload, secret, { expiresIn: "1h" });',
-        '',
-        '// React Component',
-        'const UserProfile = ({ user }) => {',
-        '  const [isEditing, setIsEditing] = useState(false);',
-        '  useEffect(() => {',
-        '    fetchUserData();',
-        '  }, []);',
-        '  return (',
-        '    <div className="profile">',
-        '      <h2>{user.name}</h2>',
-        '    </div>',
-        '  );',
-        '};',
-        '',
-        'async function hashPassword(password) {',
-        '  const salt = await bcrypt.genSalt(10);',
-        '  return await bcrypt.hash(password, salt);',
-        '}',
-        '',
-        'const leetcodeProblems = [',
-        '  "Two Sum", "Add Two Numbers",',
-        '  "Longest Substring", "Median Arrays",',
-        '  "Palindromic Substring", "Zigzag Conversion"',
-        '];',
-        '',
-        'git add .',
-        'git commit -m "feat: add new feature"',
-        'git push origin main',
-        '',
-        'docker build -t myapp .',
-        'docker run -p 3000:3000 myapp',
-        '',
-        'SELECT * FROM users WHERE active = 1;',
-        'UPDATE users SET last_login = NOW();',
-        'DELETE FROM sessions WHERE expires < NOW();',
-        '',
-        'def quick_sort(arr):',
-        '    if len(arr) <= 1:',
-        '        return arr',
-        '    pivot = arr[len(arr) // 2]',
-        '    left = [x for x in arr if x < pivot]',
-        '    middle = [x for x in arr if x == pivot]',
-        '    right = [x for x in arr if x > pivot]',
-        '    return quick_sort(left) + middle + quick_sort(right)',
-        '',
-        'import { useState, useEffect } from "react";',
-        'import axios from "axios";',
-        '',
-        'const API_BASE_URL = process.env.REACT_APP_API_URL;',
-        'const authToken = localStorage.getItem("token");',
-        ''
-    ];
-    
-    let codeContent = '';
-    const columns = 8;
-    const rowsPerColumn = 100;
-    
-    for (let col = 0; col < columns; col++) {
-        for (let row = 0; row < rowsPerColumn; row++) {
-            const snippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-            codeContent += ' '.repeat(col * 25) + snippet + '\n';
-        }
-        codeContent += '\n\n';
-    }
-    
-    codeLines.textContent = codeContent;
-}
+          const eyeRadius = Math.min(eyeRect.width, eyeRect.height) / 2;
+          const pupilRadius = parseFloat(getComputedStyle(item.pupil).width) / 2 || (eyeRadius * 0.25);
+          const maxOffset = Math.max(eyeRadius - pupilRadius - 6, 6);
 
-function throttle(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
+          const nx = dx / dist;
+          const ny = dy / dist;
 
-window.addEventListener('scroll', throttle(() => {
-    updateActiveLink();
-}, 100));
+          const targetX = nx * Math.min(dist, maxOffset);
+          const targetY = ny * Math.min(dist, maxOffset);
 
-window.addEventListener('load', () => {
-    const loader = document.querySelector('.loader');
-    if (loader) {
-        loader.style.opacity = '0';
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 500);
-    }
-});
+          state[idx].x += (targetX - state[idx].x) * smooth;
+          state[idx].y += (targetY - state[idx].y) * smooth;
 
-let konamiCode = [];
-const konamiSequence = [
-    'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
-    'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
-    'KeyB', 'KeyA'
-];
+          item.pupil.style.transform = `translate3d(${state[idx].x}px, ${state[idx].y}px, 0)`;
+        });
 
-document.addEventListener('keydown', (e) => {
-    konamiCode.push(e.code);
-    if (konamiCode.length > konamiSequence.length) {
-        konamiCode.shift();
-    }
-    
-    if (konamiCode.join(',') === konamiSequence.join(',')) {
-        document.body.style.filter = 'hue-rotate(180deg)';
-        showNotification('🎉 Easter egg activated! Matrix mode enabled!', 'success');
-        
-        setTimeout(() => {
-            document.body.style.filter = 'none';
-        }, 5000);
-        
-        konamiCode = [];
-    }
-});
+        requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
+      window.robotEyes = {
+        setSize(px){ document.documentElement.style.setProperty('--eye-size', px + 'px'); },
+        setPupil(px){ document.documentElement.style.setProperty('--pupil-size', px + 'px'); }
+      };
 
-function initTypingEffect() {
-    
-    const texts = [
-        'Full Stack Dev',
-        'Backend Nerd', 
-        'LeetCode Enthusiast',
-        'Terminal Tinkerer'
-    ];
-    
-    const typedTextElement = document.querySelector('.typed-text');
-    
-    if (!typedTextElement) {
-        console.error('typed-text element not found!');
-        const subtitleElement = document.querySelector('.subtitle');
-        if (subtitleElement) {
-            subtitleElement.innerHTML = 'Full Stack Developer <span class="typing-cursor">&nbsp;</span>';
-        }
-        return;
-    }
-    
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    
-    function typeText() {
-        const currentText = texts[textIndex];
-        
-        if (isDeleting) {
-            typedTextElement.textContent = currentText.substring(0, charIndex - 1);
-            charIndex--;
-            
-            if (charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-                setTimeout(typeText, 500);
-                return;
-            }
-        } else {
-            typedTextElement.textContent = currentText.substring(0, charIndex + 1);
-            charIndex++;
-            
-            if (charIndex === currentText.length) {
-                isDeleting = true;
-                setTimeout(typeText, 2000);
-                return;
-            }
-        }
-        const typingSpeed = isDeleting ? 50 : 100;
-        setTimeout(typeText, typingSpeed);
-    }
-    typeText();
-}
+    })();
